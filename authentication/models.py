@@ -1,5 +1,8 @@
-from django.utils import timezone
+from datetime import datetime, timedelta
 
+from django.conf import settings
+from django.utils import timezone
+import jwt
 from django.contrib.auth.models import AbstractUser, Permission, PermissionsMixin, UserManager
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
@@ -58,4 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
 
     @property
     def token(self):
-        return ''
+        token = jwt.encode({'email':self.email, 'exp':datetime.utcnow() + timedelta(hours=24)},
+                           settings.SECRET_KEY, algorithm='HS256')
+
+        return token
