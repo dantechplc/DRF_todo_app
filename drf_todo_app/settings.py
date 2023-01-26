@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_filters',
     'todos',
     'authentication',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
